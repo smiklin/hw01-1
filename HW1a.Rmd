@@ -13,13 +13,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 For each part, indicate whether we would generally expect the performance of a flexible statistical learning method to be better or worse than an inflexible method. Justify your answer.
 
-a) The sample size $n$ is extremely large, and the number of predictors $p$ is small.
+**a) The sample size $n$ is extremely large, and the number of predictors $p$ is small.**
+With a alrge sample size and a small number of predictors, a flexible method will probably peform better—because of the flexibility, it will fit the data better, and we would expect it to be a fairly accurate model ebcause of the large n and small p (overtiffing is unlikely to be a problem)
 
-b) The number of predictors $p$ is extremely large, and the number of observations $n$ is small.
+**b) The number of predictors $p$ is extremely large, and the number of observations $n$ is small.**
 
-c) The relationship between the predictors and response is highly non-linear.
+With a small n and a very large p, an inflexible method will problably be better, because overfitting with a flexible method would be a big issue. An inflexible method such as lasso regression will also force a decrease in p, making the model more interpretable.
 
-d) The variance of the error terms $\sigma^2 = \text{Var}(\epsilon)$ is extremely high.
+**c) The relationship between the predictors and response is highly non-linear.**
+
+With a highly non-linear relationship, we would expect the flexible method as more flexible methods allow for modeling of non-linear and increasingly complex relationships.
+
+**d) The variance of the error terms $\sigma^2 = \text{Var}(\epsilon)$ is extremely high.**
+In case of large variance of the error terms, we would expect an inflexible method to perform better, as a flexible method would capture too much noise in the model.
 
 
 ## Question 2: Bias-variance decomposition
@@ -143,9 +149,61 @@ Figure 2.13 in [ISL] illustrates a simulated example defining the decision bound
 a) Set your random number generator seed.
 b) Simulate a dataset of $N=200$ with $X_1, X_2$ where $X_1, X_2$ are random uniform variables between $[-1,1]$. 
 c) Calculate $Y=X_1+ X_1^2 + X_2 + X_2^2 + \epsilon$, where $\epsilon ~ N(\mu=0,\sigma^2=0.25)$.
-d) $Y$is defined in terms of the log-odds of success on the domain $[-\infty, +\infty]$. Calculate the probability of success bounded between $[0,1]$.
+d) $Y$ is defined in terms of the log-odds of success on the domain $[-\infty, +\infty]$. Calculate the probability of success bounded between $[0,1]$.
 e) Plot each of the data points on a graph and use color to indicate if the observation was a success or a failure.
 f) Overlay the plot with Bayes decision boundary, calculated using $X_1, X_2$
 g) Give your plot a meaningful title and axis labels.
 h) The colored background grid is optional.
+
+```{r}
+#set seed
+set.seed(123)
+
+#simulate dataset
+
+dataset <- tibble(X1 = runif(n = 200, min = -1, max = 1), 
+                  X2 = runif(n = 200, min = -1, max = 1)) 
+
+# calculate Y 
+
+dataset <- dataset %>%
+    mutate(Y= X1 + X1^2+X2 + X2^2 + rnorm(n = 200, mean = 0, sd = sqrt(0.25)))
+
+# calculate probability of success and assign success/fail
+dataset <- dataset %>%
+    mutate( probability = exp(Y)/(1+exp(Y)),
+            outcome = ifelse(probability > 0.5, "Success", "Failure"))
+
+
+# find values of X2 for each X@, for which probability of success is 0.5,
+# that is Y=log(0.5/0/5) = log(1) = 0.
+# I use the quadratic equation, keeping the solution that is >= -1
+
+boundary <- tibble(X1 = seq(-1, 1, by = 0.001)) %>%
+    mutate(X2_1 = (-1+sqrt(1-4*(X1+X1^2)))/2,
+            X2_2 = (-1-sqrt(1-4*(X1+X1^2)))/2) 
+
+
+# make a grid set
+
+X1 <- seq(-1, 1, by = 0.02)
+X2 <- seq(-1, 1, by = 0.02)
+  
+grid <- expand.grid(X1 = X1,X2 = X2) %>%
+     mutate(Y= X1 + X1^2 + X2 + X2^2,
+            probability = exp(Y)/(1+exp(Y)),
+            outcome = ifelse(probability > 0.5, "Success", "Failure"))
+
+# plot everything
+
+ggplot() +
+    geom_point(data = grid, aes(x=X1, y=X2, color = outcome), size = 0.01, alpha = 0.3)+
+    geom_point(data = dataset, aes(x=X1, y=X2, color = outcome)) +
+    geom_line(data = boundary,aes(x = X1, y=X2_1), linetype = "dashed") +
+    geom_line(data = boundary,aes(x = X1, y=X2_2), linetype = "dashed") +
+    scale_y_continuous(limits = c(-1, 1))+
+    theme_bw()
+
+
+```
 
