@@ -15,11 +15,11 @@ For each part, indicate whether we would generally expect the performance of a f
 
 **a) The sample size $n$ is extremely large, and the number of predictors $p$ is small.**
 
-With a alrge sample size and a small number of predictors, a flexible method will probably peform better—because of the flexibility, it will fit the data better, and we would expect it to be a fairly accurate model ebcause of the large n and small p (overtiffing is unlikely to be a problem)
+With a large sample size and a small number of predictors, a flexible method will probably perform better—because of the flexibility, it will fit the data better, and we would expect it to be a fairly accurate model because of the large n and small p (over-fitting is unlikely to be a problem)
 
 **b) The number of predictors $p$ is extremely large, and the number of observations $n$ is small.**
 
-With a small n and a very large p, an inflexible method will problably be better, because overfitting with a flexible method would be a big issue. An inflexible method such as lasso regression will also force a decrease in p, making the model more interpretable.
+With a small n and a very large p, an inflexible method will probably be better, because over-fitting with a flexible method would be a big issue. An inflexible method such as lasso regression will also force a decrease in p, making the model more interpretable.
 
 **c) The relationship between the predictors and response is highly non-linear.**
 
@@ -32,7 +32,7 @@ In case of large variance of the error terms, we would expect an inflexible meth
 
 ## Question 2: Bias-variance decomposition
 
- a) Generate a graph of typical (squared) bias, variance, training error, test error, and Bayes (irreducible) error curves, on a single plot, as we go from less flexible statistical learning methods towards more flexible approaches. The x-axis should represent the amount of flexibility in the method, and the y-axis should represent the values for each curve. There should be five curves. Make sure to label each one.
+a) Generate a graph of typical (squared) bias, variance, training error, test error, and Bayes (irreducible) error curves, on a single plot, as we go from less flexible statistical learning methods towards more flexible approaches. The x-axis should represent the amount of flexibility in the method, and the y-axis should represent the values for each curve. There should be five curves. Make sure to label each one.
 
 ```{r}
 library(tidyverse)
@@ -132,11 +132,11 @@ errors %>%
 
 ```
 
- b) Explain why each of the five curves has the shape displayed in part (a).
+b) Explain why each of the five curves has the shape displayed in part (a).
 
-**Bayes (irreducible) error** is a constant because it is a constant that has to do with the data (specifically $\epsilon$), not with the models that we are choosing. 
-We see **squared bias** decreasing as the flexibility increases because more flexible methods will fit the model to the sample better. In contrast, **variance** increases with flexibility—the more flexible the model,the better it will fit a certain sample but because of overfitting, the flexible models will varry more with each different sample.
-This tradeoff is also seen with the  training and testing MSE: the more flexible the model, the more it can minimize the **train MSE**. To a certain point, more flexible models will also decrease the **test MSE** because they are better models, but if too flexible, they overfit the sample data which will result in a larger test MSE (therefore the U-shape)
+**Bayes (irreducible) error** is a constant because it has to do with the data (specifically $\epsilon$), not with the models that we are choosing—changing the modeling strategy does not impact the irreducible error.
+We see **squared bias** decreasing as the flexibility increases because more flexible methods will fit the model to the sample better. In contrast, **variance** increases with flexibility—the more flexible the model,the better it will fit a certain sample but because of over-fitting, the flexible models will vary more with each different sample.
+This trade-off is also seen with the  training and testing MSE: the more flexible the model, the more it can minimize the **train MSE**. To a certain point, more flexible models will also decrease the **test MSE** because they are better models, but if too flexible, they over-fit the sample data which will result in a larger test MSE (therefore the U-shape)
 Test MSE also equals to the sum of the irreducible error, squared bias and variance, and it is clear from the plot how this results in the shape of the test ME line.
 
 ## Question 3
