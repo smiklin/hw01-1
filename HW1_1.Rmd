@@ -15,7 +15,7 @@ Consider four well-known and widely believed theories of socially deviant aggres
 
 *Theory I:* Deviant aggressive behavior is learned from experience. Individuals in a society learn to do those things for which they receive rewards and to avoid those things for which they receive punishment.
 
-*Theory II: *Deviant aggressive behavior is a symbolic expression of hostility toward personal authority figures. When an individual is frustrated in his personal life, he becomes angry toward parents, bosses, or public officials. He will express this anger by deviant aggressive behavior.
+*Theory II:* Deviant aggressive behavior is a symbolic expression of hostility toward personal authority figures. When an individual is frustrated in his personal life, he becomes angry toward parents, bosses, or public officials. He will express this anger by deviant aggressive behavior.
 
 *Theory III:* Deviant aggressive behavior is the rational action of oppressed individuals. Social rules systematically discriminate among people. People who are most hurt by the rules are least likely to profit from conforming to them and thus do conform less.
 
@@ -68,7 +68,8 @@ The model would then seek the probability that the task is 'Done last minute' vs
 - level of worry/anxiety over meeting the deadline (higher worry meaning greater likelihood of starting early.  Distinguished from a sense of 'too anxious to start' which is captured in the first predictor).
 
 The model would then be:
-<center> \[ \text{log-odds('Done last minute')} \sim \text{enjoyable_task} + \text{n_other_tasks} + \text{deadline_worry} \] </center>
+
+    log-odds('Done last minute') ~ enjoyable_task + n_other_tasks + deadline_worry  
 
 If we assume that most people have some other tasks going on at any one time, have to do mostly unenjoyable tasks whose deadlines are not that important, this model would predict that people often leave things until the last minute.
 
@@ -81,7 +82,8 @@ An alternative model that would also be interesting to look at would be at the l
 - perceived ability to work quickly (people who believe they can get things done quickly, or underestimate the amount of time needed, would be more likely to procrastinate)
 
 The model would then be:
-<center> \[\text{log-odds('Procrasinator')} \sim \text{anxiety}^2 - \text{perfectionism} + \text{work_quickly} \] </center>
+
+    log-odds('Procrasinator') ~ anxiety^2 - perfectionism + work_quickly   
 
 If we assume that many people are moderately anxious, believe that they can do things quickly and aren't perfectionist, this model would predict that people often leave things until the last minute. Of course, this prediction would change based on the context, e.g. at the UofC, we should probably assume high anxiety and high perfectionism.
 
